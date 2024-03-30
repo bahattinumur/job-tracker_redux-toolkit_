@@ -1,0 +1,31 @@
+{
+  "jobs": [
+    {
+      "id": "15155d17-abd2-4808-b833-51fa4c85650d",
+      "position": "Frontend Developer",
+      "company": "Amazon",
+      "location": "New York",
+      "status": "Interview",
+      "type": "Full Time",
+      "date": "3/28/2024"
+    },
+    {
+      "id": "2fb9c7bc-0451-4cf5-8cd4-66b876a3cd6d",
+      "position": "Mobile Developer",
+      "company": "Samsung",
+      "location": "Seoul",
+      "status": "Rejected",
+      "type": "Part Time",
+      "date": "3/28/2024"
+    },
+    {
+      "id": "a0a3b144-c4aa-4d9c-9008-4026d19a2a60",
+      "position": "Backend Developer",
+      "company": "Google",
+      "location": "Amsterdam",
+      "status": "Approved",
+      "type": "Remote",
+      "date": "3/28/2024"
+    }
+  ]
+}
