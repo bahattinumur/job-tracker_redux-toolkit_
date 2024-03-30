@@ -1,4 +1,4 @@
-<h1>MY MOVIE APP _nodemon_</h1>
+<h1>JOB TRACKER _redux-toolkit_</h1>
 
 "Job Tracker" is a job tracking application developed with React. Supported by powerful tools like React Router DOM, Axios, and Sass (SCSS), it allows users to add new jobs with critical details such as position, company, location, status, and type. Additionally, it provides a user-friendly interface for easily filtering added jobs. Integrated with Redux and Redux Toolkit, the application is designed to simplify the job search process for users.
 
