@@ -16,6 +16,10 @@
 
 - React Router
 
+- Redux
+
+- Redux Toolkit
+
 <h2> Development Tools </h2>
 
 - Vite
