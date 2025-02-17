@@ -6,21 +6,22 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setError, setJobs, setLoading } from "./redux/slices/jobSlice";
 import { useEffect } from "react";
+import { AppDispatch } from "./redux/store";
 
-const App = () => {
-  const dispatch = useDispatch();
+const App: React.FC = () => {
+  const dispatch: AppDispatch = useDispatch();
 
-  // API isteği atıp store'a bildirir
-  const getJobs = () => {
-    // slice'taki yükleniyoru true'ya çek.
+  // Sends an API request and updates the store
+  const getJobs = (): void => {
+    // Set loading state to true in the slice
     dispatch(setLoading());
 
-    // API isteği at
+    // Make an API request
     axios
       .get("http://localhost:3001/jobs")
-      // Slice'faki veriyi günceller
+      // Update data in the slice
       .then((res) => dispatch(setJobs(res.data)))
-      // Slice'daki Error'u günceller
+      // Update error in the slice
       .catch((err) => dispatch(setError(err.message)));
   };
 

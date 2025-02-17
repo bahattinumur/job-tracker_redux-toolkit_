@@ -8,7 +8,7 @@ Job Tracker is a job tracking application developed with React. Supported by pow
 
 - SCSS
 
-- JavaScript
+- TypeScript
 
 <h2> Libraries </h2>
 

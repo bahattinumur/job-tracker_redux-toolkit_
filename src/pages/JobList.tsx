@@ -3,18 +3,23 @@ import Loader from "../components/Loader";
 import Error from "../components/Error";
 import Card from "../components/Card";
 import Filter from "../components/Filter";
+import { RootState } from "../redux/store";
 
-const JobList = ({ getJobs }) => {
-  const jobState = useSelector((store) => store.jobReducer);
+interface JobListProps {
+  getJobs: () => void;
+}
+
+const JobList: React.FC<JobListProps> = ({ getJobs }) => {
+  const jobState = useSelector((store: RootState) => store.jobReducer);
 
   return (
     <div className="list-page">
       <Filter />
 
       {/* 
-      1) Yüklenme devam ediyorsa ekrana loader bas
-      2) Yüklenme bittiyse ve hata varsa ekrana hatayı ve tekrar dene butonu bas
-      3) Yüklenme bittiyse ve hata yoksa kartları ekrana bas
+     1) If the loading is still ongoing, display the loader component.
+     2) If the loading is complete and there is an error, display the error component with a retry option.
+     3) If the loading is complete and there is no error, display the job cards.
       */}
 
       {jobState.isLoading ? (

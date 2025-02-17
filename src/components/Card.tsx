@@ -7,27 +7,38 @@ import { useDispatch } from "react-redux";
 import { deleteJob } from "../redux/slices/jobSlice";
 import { toast } from "react-toastify";
 
-const Card = ({ job }) => {
+interface Job {
+  id: number;
+  company: string;
+  position: string;
+  location: string;
+  type: string;
+  date: string;
+  status: "Interview" | "Rejected" | "Approved";
+}
+
+interface CardProps {
+  job: Job;
+}
+
+const Card: React.FC<CardProps> = ({ job }) => {
   const dispatch = useDispatch();
 
-  const colors = {
+  const colors: Record<Job["status"], string> = {
     Interview: "blue",
     Rejected: "red",
     Approved: "green",
   };
 
-  const handleDelete = () => {
+  const handleDelete = (): void => {
     if (confirm("Do You Want to Delete This?")) {
-      // API isteği at
       axios
         .delete(`http://localhost:3001/jobs/${job.id}`)
-        // Başarılı olursa store'dan kaldır
         .then(() => {
           dispatch(deleteJob(job.id));
-
           toast.success("The Job Was Successfully Removed");
         })
-        .catch((err) => {
+        .catch(() => {
           toast.error("Oops, Something Went Wrong");
         });
     }

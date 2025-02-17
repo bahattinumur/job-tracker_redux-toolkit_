@@ -1,73 +1,74 @@
-import { v4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import { statusOptions, typeOptions } from "../constants";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createJob } from "../redux/slices/jobSlice";
+import { RootState } from "../redux/store";
+
+// Defined the job type
+interface Job {
+  id: string;
+  position: string;
+  company: string;
+  location: string;
+  status: string;
+  type: string;
+  date: string;
+}
 
 const AddJob = () => {
-  // Stateler
-  const jobState = useSelector((store) => store.jobReducer);
+  // the Redux state typed
+  const jobState = useSelector((store: RootState) => store.jobReducer);
 
-  // Kurulumlar
+  // Setups
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Form gönderilince
-  const handleSubmit = (e) => {
+  // Form submited
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // inputlardaki verilerden bir nesne oluştur
-    const formData = new FormData(e.target);
-    const newJobData = Object.fromEntries(formData.entries());
+    // Created an object from the data in the inputs
+    const formData = new FormData(e.currentTarget);
+    const newJobData: Job = {
+      id: uuidv4(),
+      position: formData.get("position") as string,
+      company: formData.get("company") as string,
+      location: formData.get("location") as string,
+      status: formData.get("status") as string,
+      type: formData.get("type") as string,
+      date: new Date().toLocaleDateString(),
+    };
 
-    // tarih ve Id ekle
-    newJobData.date = new Date().toLocaleDateString();
-    newJobData.id = v4();
-
-    // API'ye veriyi ekle
+    // Add data to API
     axios
       .post("http://localhost:3001/jobs", newJobData)
-      // başarılı olursa
       .then(() => {
-        // bildirim gönder
         toast.success("New Job Added");
-
-        // store'a da ekle
         dispatch(createJob(newJobData));
-
-        // anasayfaya yönlendir
         navigate("/");
       })
-      // başarısız olursa
       .catch(() => {
         toast.error("The Job Could Not be Added");
       });
   };
 
-  // dizideki değerleri aynı olan elemanları kaldır
-  const removeDuplicates = (key) => {
-    //1) Sadece pozisyonlardan oluşan bir dizi tanımla
+  // Remove elements with the same values ​​from an array
+  const removeDuplicates = (key: keyof Job): string[] => {
     const arr = jobState.jobs.map((job) => job[key]);
-
-    //2) Dizi içerisnden tekrar eden elemanı kaldır
-    const filtred = arr.filter((item, index) => arr.indexOf(item) === index);
-
-    //3) Fonksiyonun çağrıldğı yere döndür.
-    return filtred;
+    return Array.from(new Set(arr));
   };
 
   return (
     <div className="add-page">
       <section className="add-sec">
         <h2>Add a New Job</h2>
-
         <form onSubmit={handleSubmit}>
           <div>
             <label>Position</label>
             <input list="position_list" name="position" type="text" required />
-
             <datalist id="position_list">
               {removeDuplicates("position").map((i) => (
                 <option key={i} value={i} />
